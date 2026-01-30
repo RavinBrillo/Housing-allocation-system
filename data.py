@@ -52,7 +52,7 @@ def generate_rhus(num=10):
 
         #Creating different RHUs at different locations
         rhu = {
-            "name": f"{random.choice(names)} {random.randint(1, 5)}",
+            "name": f"{random.choice(names)}",
             "location": random.choice(["Newcastle", "Sunderland", "Durham", "Middlesbrough"]),
             "capacity": random.randint(10, 40),
             "services": services,
