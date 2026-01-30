@@ -1,0 +1,23 @@
+<RCC>
+  <qresource>
+    <file>sidebar_images/Allocation_matching_icon_blue-removebg-preview.png</file>
+    <file>sidebar_images/Allocation_matching_icon_white-removebg-preview.png</file>
+    <file>sidebar_images/Blue search icon.png</file>
+    <file>sidebar_images/cost tracking icon blue.png</file>
+    <file>sidebar_images/cost_tracking_icon_white__1_-removebg-preview.png</file>
+    <file>sidebar_images/dashboard_icon_white-removebg-preview.png</file>
+    <file>sidebar_images/dsahboard_icon_blue-removebg-preview.png</file>
+    <file>sidebar_images/license_management_icon_black-removebg-preview.png</file>
+    <file>sidebar_images/license_management_icon_blue-removebg-preview.png</file>
+    <file>sidebar_images/navbar_icon_white-removebg-preview.png</file>
+    <file>sidebar_images/profile_icon_white-removebg-preview.png</file>
+    <file>sidebar_images/Release_management_icon_blue-removebg-preview.png</file>
+    <file>sidebar_images/Release_management_icon_white-removebg-preview.png</file>
+    <file>sidebar_images/RHU_management_icon_blue-removebg-preview.png</file>
+    <file>sidebar_images/RHU_management_icon_white-removebg-preview.png</file>
+    <file>sidebar_images/search_icon_white-removebg-preview.png</file>
+  </qresource>
+  <qresource prefix="newPrefix">
+    <file>RHU_management_icon_white-removebg-preview-removebg-preview.png</file>
+  </qresource>
+</RCC>
