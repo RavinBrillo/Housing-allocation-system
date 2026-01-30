@@ -5,16 +5,16 @@ from PySide6.QtCore import Qt
 import sys
 from sidebar import Sidebar
 
-# FIXED: Import the correct functions from data.py
+#Importing all the data from the data.py file
 from data import (
-    generate_dashboard_counters,  # This exists in data.py
-    generate_prisoner,  # This exists in data.py
-    generate_rhus,  # This exists in data.py
-    match_prisoner_to_rhus  # This exists in data.py
+    generate_dashboard_counters,
+    generate_prisoner,
+    generate_rhus,
+    match_prisoner_to_rhus
 )
 
 
-# Creating widgets for the prisoners
+#Creating widgets for the prisoners
 class PrisonerWidget(QWidget):
     def __init__(self, prisoner):
         super().__init__()
@@ -37,7 +37,7 @@ class PrisonerWidget(QWidget):
         layout.addStretch()
 
 
-# Creating the widgets for the RHUs
+#Creating the widgets for the RHUs
 class RHUWidget(QWidget):
     def __init__(self, rhu, match_percent):
         super().__init__()
@@ -57,7 +57,7 @@ class RHUWidget(QWidget):
 
         match_label = QLabel(f"{match_percent}% match")
 
-        # Changing the color of the match label based on the percentage
+        #Changing the color of the match label based on the percentage
         if match_percent >= 80:
             color = "green"
         elif match_percent >= 60:
@@ -71,7 +71,7 @@ class RHUWidget(QWidget):
         layout.addLayout(top)
 
 
-# Calling the sidebar
+#Calling the sidebar
 class Main(Sidebar):
     def __init__(self):
         super().__init__()
@@ -87,7 +87,7 @@ class Main(Sidebar):
         self.update_dashboard()
         self.setup_matching()
 
-    # Adding titles for each page
+    #Adding titles for each page
     def add_titles(self):
         titles = {
             "dashboard": "DASHBOARD",
@@ -112,14 +112,14 @@ class Main(Sidebar):
                 title.setStyleSheet("font-size: 24px; font-weight: bold; color: black;")
                 title.show()
 
-    # Updating the widgets on the dashboard counter
+    #Updating the widgets on the dashboard counter
     def update_dashboard(self):
         counters = generate_dashboard_counters()
         self.pending_count_label.setText(str(counters['pending']))
         self.allocated_count_label.setText(str(counters['allocated']))
         self.exited_count_label.setText(str(counters['exited']))
 
-    # Setting up the matching page
+    #Setting up the matching page
     def setup_matching(self):
         for i in range(self.stackedWidget.count()):
             page = self.stackedWidget.widget(i)
@@ -174,15 +174,15 @@ class Main(Sidebar):
             self.prisoner_list.addItem(item)
             self.prisoner_list.setItemWidget(item, widget)
 
-    # Highlighting the selected prisoner
+    #Highlighting the selected prisoner
     def prisoner_selected(self, item):
         index = self.prisoner_list.row(item)
         self.current_prisoner = self.prisoners[index]
 
-        # Clear previous matches
+        #Clear previous matches
         self.clear_matches()
 
-        # Show new matches
+        #Show new matches
         self.show_matches()
 
         self.selected_rhu = None
@@ -190,7 +190,7 @@ class Main(Sidebar):
         if self.allocate_btn:
             self.allocate_btn.setEnabled(False)
 
-    # Clear previous RHU matches
+    #Clear previous RHU matches
     def clear_matches(self):
         if hasattr(self, 'rhu_layout'):
             # Remove all widgets from the layout
@@ -199,29 +199,29 @@ class Main(Sidebar):
                 if item.widget():
                     item.widget().deleteLater()
 
-    # Calculating how well the prisoner matches to the RHU
+    #Calculating how well the prisoner matches to the RHU
     def show_matches(self):
         if not self.current_prisoner:
             return
 
-        # Get matched RHUs
+        #Get matched RHUs
         matches = match_prisoner_to_rhus(self.current_prisoner, self.rhus)
 
-        # Add each match as a widget
+        #Add each match as a widget
         for rhu in matches:
-            # FIXED: Use the score from match function
+
             match_percent = rhu['score']  # match_prisoner_to_rhus already returns percentage
 
             widget = RHUWidget(rhu, match_percent)
 
-            # Connect click event
+            #Connect to a click event
             def click_handler(event, w=widget, r=rhu):
                 self.rhu_selected(w, r)
 
             widget.mousePressEvent = click_handler
             self.rhu_layout.addWidget(widget)
 
-    # RHU highlighted when selected
+    #RHU highlighted when selected
     def rhu_selected(self, widget, rhu):
         # Reset previous selection
         if self.selected_widget:
@@ -235,7 +235,7 @@ class Main(Sidebar):
         if self.allocate_btn:
             self.allocate_btn.setEnabled(True)
 
-    # Function for pop up message when a license is allocated to a RHU
+    #Function for pop up message when a license is allocated to a RHU
     def allocate(self):
         if self.current_prisoner and self.selected_rhu:
             msg_box = QMessageBox(self)
@@ -250,7 +250,7 @@ class Main(Sidebar):
             self.selected_widget = None
             self.allocate_btn.setEnabled(False)
 
-    # Functionality for the cancel button
+    #Functionality for the cancel button
     def cancel(self):
         if self.selected_widget:
             self.selected_widget.setStyleSheet("background-color: white;")
